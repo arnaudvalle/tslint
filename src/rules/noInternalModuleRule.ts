@@ -19,7 +19,7 @@ import * as ts from "typescript";
 import * as Lint from "../lint";
 
 export class Rule extends Lint.Rules.AbstractRule {
-    public static FAILURE_STRING = "Internal modules are forbidden. Use ES6 module syntax instead.";
+    public static FAILURE_STRING = "The internal 'module' syntax is deprecated, use the 'namespace' keyword instead.";
 
     public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
         return this.applyWithWalker(new NoInternalModuleWalker(sourceFile, this.getOptions()));

@@ -11,3 +11,4 @@ var b2 = new Boolean    (true);
          ~~~~~~~~~~~            [0]
 
 [0]: Forbidden constructor, use a literal instead
+
