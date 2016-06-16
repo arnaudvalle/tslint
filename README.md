@@ -192,28 +192,26 @@ tslint accepts the following command-line options:
 #### Library
 
 ```javascript
-var fileName = "Specify file name";
+const Linter = require("tslint");
+const fs = require("fs");
 
-var configuration = {
+const fileName = "Specify file name";
+const configuration = {
     rules: {
         "variable-name": true,
         "quotemark": [true, "double"]
     }
 };
-
-var options = {
+const options = {
     formatter: "json",
     configuration: configuration,
-    rulesDirectory: "customRules/", // can be an array of directories
+    rulesDirectory: "customRules/",
     formattersDirectory: "customFormatters/"
 };
 
-var Linter = require("tslint");
-var fs = require("fs");
-var contents = fs.readFileSync(fileName, "utf8");
-
-var ll = new Linter(fileName, contents, options);
-var result = ll.lint();
+const fileContents = fs.readFileSync(fileName, "utf8");
+const linter = new Linter(fileName, fileContents, options);
+const result = linter.lint();
 ```
 
 Core Rules
@@ -324,12 +322,13 @@ Core rules are included in the `tslint` package.
     * `"allow-null-check"` allows `==` and `!=` when comparing to `null`.
     * `"allow-undefined-check"` allows `==` and `!=` when comparing to `undefined`.
 * `typedef` enforces type definitions to exist. Rule options:
-    * `"call-signature"` checks return type of functions.
+    * `"call-signature"` checks return type of non-arrow functions.
+    * `"arrow-call-signature"` checks return type of arrow functions.
     * `"parameter"` checks type specifier of function parameters for non-arrow functions.
     * `"arrow-parameter"` checks type specifier of function parameters for arrow functions.
     * `"property-declaration"` checks return types of interface properties.
     * `"variable-declaration"` checks variable declarations.
-    * `"member-variable-declaration"` checks member variable declarations.
+    * `"member-variable-declaration"` checks member variable declarations. For arrow functions being assigned as properties, either the property itself or the arrow functions parameters must have a typedef.
 * `typedef-whitespace` enforces spacing whitespace for type definitions. Each rule option requires a value of `"nospace"`,
   `"onespace"` or `"space"` to require no space, exactly one or at least one space before or after the type specifier's
   colon. You can specify two objects containing the five options. The first one describes the left, the second one the
@@ -389,6 +388,7 @@ If we don't have all the rules you're looking for, you can either write your own
 - [ESLint rules for TSLint](https://github.com/buzinas/tslint-eslint-rules) - Improve your TSLint with the missing ESLint Rules
 - [tslint-microsoft-contrib](https://github.com/Microsoft/tslint-microsoft-contrib) - A set of TSLint rules used on some Microsoft projects
 - [codelyzer](https://github.com/mgechev/codelyzer) - A set of tslint rules for static code analysis of Angular 2 TypeScript projects
+- [vrsource-tslint-rules](https://github.com/vrsource/vrsource-tslint-rules)
 
 #### Writing custom rules
 
